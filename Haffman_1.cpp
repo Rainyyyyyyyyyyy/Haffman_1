@@ -592,8 +592,8 @@ int main()
     ifstream file_in("D://C_projs_Visual_studio_2022//2_Kurs_1_semestr//Kodirovanie//Haffman_1//Haffman_1//file.txt");
     //file_in.open("D:/C_projs_Visual_studio_2022/2_Kurs_1_semestr/Kodirovanie/Haffman_1/Haffman_1/file.txt", "r");
     bool code_or_decode;
-    file_in >> code_or_decode;
-    //cout << int(code_or_decode) << endl;
+    code_or_decode = char(file_in.get()) - 48;  // считываем флаг действия (0 - кодирование, 1 - раскодирование)
+    //cout << int(code_or_decode) << endl;  
     //return 0;
     
     if (!code_or_decode) {
@@ -679,6 +679,8 @@ int main()
 
         ofstream file_out("D://C_projs_Visual_studio_2022//2_Kurs_1_semestr//Kodirovanie//Haffman_1//Haffman_1//file.txt");
         file_out << '1';
+        file_out << a.Len();
+        file_out << '.';
         
         int counter8 = 0;
         char iterator_per_code = 0;
@@ -699,6 +701,7 @@ int main()
 
             file_out << alphabet[i];
             file_out << (int(codes[i].lena));
+            file_out << '.';        /// разделитель между длиной кода и самим кодом
             char counter_per_char = 0;
 
             while (counter8 < 8) {
@@ -732,6 +735,8 @@ int main()
             }
             file_out << endl;
         }
+        file_out << '.';        /// флажок на то, что начинаем выводить шифр
+
         unsigned char crypt_out = 0;
         counter8 = 0;
         char this_lena = 0;
@@ -787,10 +792,59 @@ int main()
         delete[] crypts;
         delete[] codes;
     }
+
+    if (code_or_decode == 1){
+        //ifstream file_in("D://C_projs_Visual_studio_2022//2_Kurs_1_semestr//Kodirovanie//Haffman_1//Haffman_1//file.txt");
+        int size_of_input = 0;
+        char t = file_in.get();;
+        while (t!='.') {
+            size_of_input = size_of_input * 10 + t - 48;
+            t = file_in.get();
+        }       /// считываем длину входной строки (после закодирования она записывается после флага действия в виде int)
+        cout << "Len of input: "<<size_of_input << endl;
+
+        unsigned char** codes = new unsigned char* [256];
+        for (int i = 0; i < 256; i++) {
+            codes[i] = new unsigned char[0];
+        }
+
+        /// ==================================================================================
+        //// ***************** начинаем обрабатывать таблицу кодов ****************************
+        /// ==================================================================================
+        unsigned char* symbols = new unsigned char[256];    /// массив символов из таблицы
+        unsigned char* code_lenas = new unsigned char[256]; /// массив кодов для символов из таблицы
+        for (int i = 0; i < 256; code_lenas[i] = symbols[i] = 0, i++);
+        t = file_in.get();
+        short int this_code_len = 0;
+        while (t != '.') {
+            this_code_len = this_code_len * 10 + t - 48;
+        }
+
+
+        ///char* code_lenas = new char[256];
+        ///for (int i = 0; i < 256; code_lenas[i] = 0, i++);
+         
+
+
+
+
+        return 0;
+
+    }
+
+    
     
 
 
-
+    /// закодирование ГОТОВО
+    /*      прописать кол-во символов во входной строке при закодировании (поможет при раскодировании)
+    *       т.к. код префиксный - раскодирование единообразное
+    * 
+    *   ПРОПИСАТЬ РАСКОДИРОВАНИЕ
+    
+    
+    
+    */
 
     return 0;
    
