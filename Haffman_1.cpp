@@ -733,11 +733,31 @@ int main()
             file_out << endl;
         }
         char crypt_out = 0;
+        counter8 = 0;
+        char this_lena = 0;
         for (long long i = 0; i < a.Len(); i++) {
             for (int j = 0; j < k; j++) {
                 if (alphabet[j] == a[i]){
-                    char this_lena = codes[j].lena;
+                    this_lena = codes[j].lena;
+                    while (counter8 < 8){
+                        if (this_lena) {
+                            crypt_out = (crypt_out << 1) | ((codes[j].code >> this_lena-1) & 1);
+                            counter8++;
+                            this_lena--;
+                        }
+                        else {
+                            if(counter8<8)break;
+                        }
+                        if (counter8 == 8) {
+                            file_out << crypt_out;
+                            crypt_out = 0;
+                            counter8 = 0;
+                        }
 
+                    }
+                    ////int char_counter = 0;
+                    ///for (char_counter; char_counter < this_lena / 8; char_counter++)file_out << (codes[j].code & 255);
+                    
                     // продумать заталкивание всех кодов в чары, шоб сжало, а не просто выводить все коды по чарам
                     //char this_lena = (codes[j].lena % 8) ? codes[j].lena / 8 + 1 : codes[j].lena / 8;
                     //if(codes[j].lena >=8)
