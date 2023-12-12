@@ -732,7 +732,7 @@ int main()
             }
             file_out << endl;
         }
-        char crypt_out = 0;
+        unsigned char crypt_out = 0;
         counter8 = 0;
         char this_lena = 0;
         for (long long i = 0; i < a.Len(); i++) {
@@ -741,7 +741,7 @@ int main()
                     this_lena = codes[j].lena;
                     while (counter8 < 8){
                         if (this_lena) {
-                            crypt_out = (crypt_out << 1) | ((codes[j].code >> this_lena-1) & 1);
+                            crypt_out = (crypt_out << 1) | ((codes[j].code >> (this_lena-1)) & 1);//(crypt_out) | ((codes[j].code >> this_lena-1) & 1)<<counter8
                             counter8++;
                             this_lena--;
                         }
@@ -755,6 +755,7 @@ int main()
                         }
 
                     }
+                    if(!this_lena)break;
                     ////int char_counter = 0;
                     ///for (char_counter; char_counter < this_lena / 8; char_counter++)file_out << (codes[j].code & 255);
                     
