@@ -748,7 +748,7 @@ int main()
                         else {
                             if(counter8<8)break;
                         }
-                        if (counter8 == 8) {
+                        if (counter8 == 8) {  
                             file_out << crypt_out;
                             crypt_out = 0;
                             counter8 = 0;
